@@ -9,7 +9,6 @@ chrome.storage.local.get(null, (items) => {
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
   if (areaName === 'local') {
-    const fragment = new DocumentFragment();
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
       if (key === 'store-devtools') {
         const actionState = createActionState(newValue);
