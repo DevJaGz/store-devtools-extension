@@ -20,5 +20,11 @@
     "16": "public/icon16.png",
     "48": "public/icon48.png",
     "128": "public/icon128.png"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost:4200/*"],
+      "js": ["content.js"]
+    }
+  ]
 }
