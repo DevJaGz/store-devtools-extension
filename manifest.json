@@ -4,14 +4,8 @@
   "author": "Julian Gomez",
   "version": "1.0",
   "description": "A Chrome DevTools extension for http://localhost:4200",
-  "host_permissions": [
-    "http://localhost:4200/*"
-  ],
-  "permissions": [
-    "contextMenus",
-    "tabs",
-    "activeTab"
-  ],
+  "host_permissions": ["http://localhost/*", "http://127.0.0.1/*"],
+  "permissions": ["contextMenus", "tabs", "activeTab", "storage"],
   "devtools_page": "devtools.html",
   "background": {
     "service_worker": "background.js"
@@ -23,7 +17,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://localhost:4200/*"],
+      "matches": ["http://localhost/*", "http://127.0.0.1/*"],
       "js": ["content.js"]
     }
   ]

@@ -1,10 +1,17 @@
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log('Received message from runtime: ', message);
-  if (message.type === 'store-data') {
-    const eventDataDiv = document.getElementById('eventData');
-    if (eventDataDiv) {
-      eventDataDiv.textContent = JSON.stringify(message.data, null, 2);
+const eventList = [];
+
+chrome.storage.local.get(null, (items) => {
+  eventList.push(items['store-devtools']);
+});
+
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName === 'local') {
+    for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
+      if (key === 'store-devtools') {
+        eventList.push(newValue);
+        break
+      }
     }
-    sendResponse({ status: 'success' });
   }
 });
+
