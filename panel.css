@@ -54,14 +54,26 @@ body {
 }
 
 .action {
-  max-height: 300px;
-  overflow-y: auto;
   background: #303030;
   padding: 0.5rem 1rem;
   border-radius: 9999px;
 }
+
 .action[open] {
   border-radius: 0.325rem;
+}
+
+.action summary{
+  cursor: pointer;
+}
+
+.action[open] summary {
+  padding: 0 0 1rem 0;
+}
+
+.action pre {
+  max-height: 300px;
+  overflow: auto;
 }
 
 @media screen and (width > 768px) {
