@@ -49,6 +49,21 @@ body {
   text-align: center;
 }
 
+#actionsList {
+  list-style-type: none;
+}
+
+.action {
+  max-height: 300px;
+  overflow-y: auto;
+  background: #303030;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+}
+.action[open] {
+  border-radius: 0.325rem;
+}
+
 @media screen and (width > 768px) {
   .panel__content {
     grid-template-columns: 1fr 1fr;

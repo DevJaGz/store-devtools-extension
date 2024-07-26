@@ -14,13 +14,24 @@
     <main class="panel__content">
       <section class="section actions">
         <h3>Actions</h3>
-        <div id="eventData">No event data received</div>
+        <span id="emptyActionsMsg">No event data received</span>
+        <ul id="actionsList"></ul>
       </section>
-      <section class="section states">
+      <section class="section state">
         <h3>State</h3>
+        <pre id="state">No event data received</pre>
       </section>
     </main>
   </div>
   <script src="panel.js"></script>
+  <template id="actionTemplate">
+    <li>
+      <details class="action">
+        <summary >Some details</summary>
+        <pre>More info about the details.</pre>
+      </details>
+    </li>
+  </template>
 </body>
 </html>
+

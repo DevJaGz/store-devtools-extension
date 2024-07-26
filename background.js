@@ -32,12 +32,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const { data } = message;
     const storageData = {
       ['store-devtools']: {
-        action: data.actionId,
+        actionId: data.actionId,
         payload: data.payload,
         state: data.state
       }
     };
-    console.log('SAVING DATA:',storageData);
     chrome.storage.local.set(storageData);
   }
 });
