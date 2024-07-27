@@ -36,7 +36,7 @@ Chrome Extension to inspect the Custom Store Actions through a panel that can be
 ## <a name="requirements"></a> 📋 Requirements
 
 - Chrome Version 127.0.6533.72 (Official Build) (64-bit)
-- Emit the Store actions using the folwing syntax:
+- Emit the Store actions using the following syntax:
 
 ```javascript
     try {
