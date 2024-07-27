@@ -91,7 +91,9 @@ body {
   max-height: 300px;
   overflow: auto;
   margin-top: var(--base-gap);
+  background-color: #303030;
 }
+
 .action pre::-webkit-scrollbar {
   width: 0.25rem;
   height: 0.25rem;
