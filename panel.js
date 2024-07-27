@@ -6,10 +6,8 @@ const actionStateList = [];
 hljs.highlightAll();
 
 chrome.storage.local.get(null, (items) => {
-  console.log(items);
   const rawActionStateList = items["store-devtools"];
   if (!rawActionStateList?.length) {
-    console.log("clearPanel From initial load", rawActionStateList);
     clearPanel();
     return;
   }
@@ -21,7 +19,6 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
       if (key === "store-devtools") {
         if (!newValue?.length) {
-          console.log("clearPanel Update", newValue);
           clearPanel();
           return;
         }
@@ -81,7 +78,7 @@ function renderNewActionState(actionState) {
     $summary.classList.add("active");
     renderNewState(actionState.state);
   });
-  console.log("renderNewActionState", actionStateList);
+
   if (actionStateList.length === 1) {
     $summary.click();
   }

@@ -3,7 +3,6 @@ const actionStateList = [];
 chrome.runtime.onInstalled.addListener(() => {
   chrome.webNavigation.onCommitted.addListener((details) => {
     if (details.frameId === 0 && details.transitionType === "reload") {
-      console.log("clearing storage");
       chrome.storage.local.clear();
       actionStateList.length = 0;
     }
@@ -21,7 +20,6 @@ chrome.runtime.onInstalled.addListener(() => {
       const storageData = {
         ["store-devtools"]: actionStateList,
       };
-      console.log("Saving storage");
       chrome.storage.local.set(storageData);
     }
   });
