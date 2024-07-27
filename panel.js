@@ -60,6 +60,11 @@ function renderNewActionState(actionState) {
   $actionList.appendChild(clone);
   updateEmptyMsg($actionList);
   $summary.addEventListener("click", () => {
+    $actionList.querySelectorAll("summary").forEach(($action) => {
+      console.log("removing", $action);
+      $action.classList.remove("active");
+    });
+    $summary.classList.add("active");
     renderNewState(actionState.state);
   });
   if (actionStateList.length === 1) {
