@@ -180,11 +180,13 @@ body {
   transition: var(--transitions-color);
   border-color: transparent;
   font-weight: bold;
+  user-select: none;
 }
 
 .btn.active {
   background-color: var(--color-highlight);
   color: var(--color-surface);
+  pointer-events: none;
 }
 
 .btn:not(.active):hover {
