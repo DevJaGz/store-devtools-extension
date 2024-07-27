@@ -49,7 +49,6 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--base-gap);
-  margin-top: var(--base-gap);
 }
 
 .section {
