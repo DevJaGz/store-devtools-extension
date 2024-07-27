@@ -1,12 +1,30 @@
 const $ = (query) => document.querySelector(query);
-const $state = $("#state");
-
+const $codeWindow = $("#codeWindow");
+const $tapBtns = $("#tabs").querySelectorAll("button");
 const actionStateList = [];
 const viewState = {
-  tab: 'state', // state, payload, diff
-}
+  tab: "state", // state, payload, diff
+  actionStateSelected: null,
+};
 
 hljs.highlightAll();
+
+$tapBtns.forEach(($tapBtn) => {
+  $tapBtn.addEventListener("click", () => {
+    const tab = $tapBtn.dataset.tab;
+    const actionStateSelected = viewState.actionStateSelected;
+    const tapBtnsList = Array.from($tapBtns);
+    const $currentTabBtn = tapBtnsList.find(
+      (btn) => btn.dataset.tab === viewState.tab
+    );
+    $currentTabBtn.classList.remove("active");
+    $tapBtn.classList.add("active");
+    viewState.tab = tab;
+    if (actionStateSelected) {
+      renderCodeWindow(actionStateSelected);
+    }
+  });
+});
 
 chrome.storage.local.get(null, (items) => {
   const rawActionStateList = items["store-devtools"];
@@ -74,12 +92,15 @@ function renderNewActionState(actionState) {
   updateEmptyMsg($actionList);
 
   $summary.addEventListener("click", () => {
+    viewState.actionStateSelected = actionState;
+
     const summaryList = $actionList.querySelectorAll("summary");
     summaryList.forEach(($summaryItem) => {
       $summaryItem.classList.remove("active");
     });
+
     $summary.classList.add("active");
-    renderNewState(actionState.state);
+    renderCodeWindow(actionState);
   });
 
   if (actionStateList.length === 1) {
@@ -87,10 +108,24 @@ function renderNewActionState(actionState) {
   }
 }
 
-function renderNewState(state) {
-  const rawState = JSON.stringify(state, null, 2);
-  const highlightedCode = hljs.highlight(rawState, { language: "json" }).value;
-  $state.innerHTML = highlightedCode;
+function renderCodeWindow(actionState) {
+  console.log('renderCodeWindow',actionState);
+  const tab = viewState.tab;
+  let rawCode = JSON.stringify(actionState.state, null, 2);
+  if (tab === "payload") {
+    rawCode = JSON.stringify(actionState.payload, null, 2);
+  } else if (tab === "diff") {
+    rawCode = '{ "diff": "TODO" }';
+  }
+
+  console.log('rawCode',rawCode);
+  try {
+    const highlightedCode = hljs.highlight(rawCode, { language: "json" }).value;
+    $codeWindow.innerHTML = highlightedCode;
+  } catch (error) {
+    console.warn(error);
+  }
+
 }
 
 function updateEmptyMsg($actionList) {

@@ -176,12 +176,13 @@ body {
   cursor: pointer;
   transition: var(--transitions-color);
   border-color: transparent;
+  font-weight: bold;
 }
 
 .btn.active {
   background-color: var(--color-highlight);
   color: var(--color-surface);
-  font-weight: bold;
+
 }
 
 .btn:not(.active):hover {
