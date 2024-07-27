@@ -6,23 +6,36 @@ const actionStateList = [];
 hljs.highlightAll();
 
 chrome.storage.local.get(null, (items) => {
-  const actionState = createActionState(items["store-devtools"]);
-  actionStateList.push(actionState);
-  renderNewActionState(actionState);
+  console.log(items);
+  const rawActionStateList = items["store-devtools"];
+  handleActionsStateRender(rawActionStateList);
 });
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
   if (areaName === "local") {
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
       if (key === "store-devtools") {
-        const actionState = createActionState(newValue);
-        actionStateList.push(actionState);
-        renderNewActionState(actionState);
-        break;
+        handleActionsStateRender(newValue);
+        continue;
       }
     }
   }
 });
+
+function handleActionsStateRender(rawActionStateList) {
+  const newStart = actionStateList.length;
+  const newEnd = rawActionStateList.length;
+  const newRawActionStateList = rawActionStateList.slice(newStart, newEnd);
+  for (const newRawActionState of newRawActionStateList) {
+    handleActionStateRender(newRawActionState);
+  }
+}
+
+function handleActionStateRender(rawActionState) {
+  const actionState = createActionState(rawActionState);
+  actionStateList.push(actionState);
+  renderNewActionState(actionState);
+}
 
 function createActionState(item) {
   return {

@@ -1,3 +1,5 @@
+const actionStateList = [];
+
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "openDevTools",
@@ -6,29 +8,29 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.type === 'store-data') {
+    if (message.type === "store-data") {
       const { data } = message;
-      const storageData = {
-        ['store-devtools']: {
-          actionId: data.actionId,
-          payload: data.payload,
-          state: data.state
-        }
+      const actionState = {
+        actionId: data.actionId,
+        payload: data.payload,
+        state: data.state,
       };
-      console.log('[BACKGROUND] store-data', storageData);
+      actionStateList.push(actionState);
+      const storageData = {
+        ['store-devtools']: actionStateList
+      };
+      console.log("[BACKGROUND] store-data", storageData);
       chrome.storage.local.set(storageData);
     }
   });
 
   chrome.notifications.create({
-    type: 'basic',
-    iconUrl: 'public/icon48.png',
-    title: 'Store DevTools',
-    message: 'Ready to use!',
-    buttons: [
-      { title: 'Ok' }
-    ],
-    priority: 0
+    type: "basic",
+    iconUrl: "public/icon48.png",
+    title: "Store DevTools",
+    message: "Ready to use!",
+    buttons: [{ title: "Ok" }],
+    priority: 0,
   });
 });
 
@@ -50,9 +52,3 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     });
   }
 });
-
-
-
-
-
-
