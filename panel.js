@@ -1,69 +1,78 @@
+// Utility Functions
 const $ = (query) => document.querySelector(query);
+
+// DOM Elements
 const $codeWindow = $("#codeWindow");
 const $tapBtns = $("#tabs").querySelectorAll("button");
+
+// State Management
 const actionStateList = [];
 const viewState = {
   tab: "state", // state, payload, diff
   actionStateSelected: null,
 };
 
-
+// Initialize Syntax Highlighting
 hljs.highlightAll();
 
-$tapBtns.forEach(($tapBtn) => {
-  $tapBtn.addEventListener("click", () => {
-    const tab = $tapBtn.dataset.tab;
-    const actionStateSelected = viewState.actionStateSelected;
-    const tapBtnsList = Array.from($tapBtns);
-    const $currentTabBtn = tapBtnsList.find(
-      (btn) => btn.dataset.tab === viewState.tab
-    );
-    $currentTabBtn.classList.remove("active");
-    $tapBtn.classList.add("active");
-    viewState.tab = tab;
-    if (actionStateSelected) {
-      renderCodeWindow(actionStateSelected);
-    }
+// Event Listeners
+initializeTabButtons();
+initializeStorageListener();
+loadInitialStateFromStorage();
+
+// Function Definitions
+
+function initializeTabButtons() {
+  $tapBtns.forEach(($tapBtn) => {
+    $tapBtn.addEventListener("click", () => handleTabClick($tapBtn));
   });
-});
+}
 
-chrome.storage.local.get(null, (items) => {
-  const rawActionStateList = items["store-devtools"];
-  if (!rawActionStateList?.length) {
-    clearPanel();
-    return;
+function handleTabClick($tapBtn) {
+  const tab = $tapBtn.dataset.tab;
+  const actionStateSelected = viewState.actionStateSelected;
+
+  $tapBtns.forEach((btn) => btn.classList.toggle("active", btn === $tapBtn));
+  viewState.tab = tab;
+
+  if (actionStateSelected) {
+    renderCodeWindow(actionStateSelected);
   }
-  handleActionsStateRender(rawActionStateList);
-});
+}
 
-chrome.storage.onChanged.addListener((changes, areaName) => {
-  if (areaName === "local") {
-    for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
-      if (key === "store-devtools") {
-        if (!newValue?.length) {
-          clearPanel();
-          return;
-        }
+function initializeStorageListener() {
+  chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName === "local" && changes["store-devtools"]) {
+      const newValue = changes["store-devtools"].newValue;
+      if (!newValue?.length) {
+        clearPanel();
+      } else {
         handleActionsStateRender(newValue);
-        continue;
       }
     }
-  }
-});
+  });
+}
+
+function loadInitialStateFromStorage() {
+  chrome.storage.local.get(null, (items) => {
+    const rawActionStateList = items["store-devtools"];
+    if (!rawActionStateList?.length) {
+      clearPanel();
+    } else {
+      handleActionsStateRender(rawActionStateList);
+    }
+  });
+}
 
 function handleActionsStateRender(rawActionStateList) {
-  const newStart = actionStateList.length;
-  const newEnd = rawActionStateList.length;
-  const newRawActionStateList = rawActionStateList.slice(newStart, newEnd);
-  for (const newRawActionState of newRawActionStateList) {
-    handleActionStateRender(newRawActionState);
-  }
+  const newActionStates = rawActionStateList.slice(actionStateList.length);
+  newActionStates.forEach(handleActionStateRender);
 }
 
 function handleActionStateRender(rawActionState) {
   const actionState = createActionState(rawActionState);
   actionStateList.push(actionState);
-  renderNewActionState(actionState);
+  renderActionState(actionState);
 }
 
 function createActionState(item) {
@@ -73,88 +82,37 @@ function createActionState(item) {
   };
 }
 
-function renderNewActionState(actionState) {
-  // renderActionStateWithExpandableTemplate(actionState);
-  renderActionStateWithFixedTemplate(actionState);
-}
-
-function renderActionStateWithFixedTemplate(actionState) {
+function renderActionState(actionState) {
   const $actionList = $("#actionsList");
   const $actionTemplate = $("#actionTemplateBtn");
   if (!$actionTemplate) {
     console.warn("Template not found", actionState);
     return;
   }
+  
   const clone = $actionTemplate.content.cloneNode(true);
   const $btn = clone.querySelector("button");
   $btn.querySelector("span:first-child").textContent = actionState.actionId;
   $btn.querySelector("span:last-child").textContent = formatTime(new Date());
   $actionList.appendChild(clone);
+  
   updateEmptyMsg($actionList);
-
+  
   $btn.addEventListener("click", () => {
     viewState.actionStateSelected = actionState;
-
-    const buttonList = $actionList.querySelectorAll("button");
-    buttonList.forEach(($buttonItem) => {
-      $buttonItem.classList.remove("active");
-    });
-
-    $btn.classList.add("active");
+    setActiveButton($actionList, $btn);
     renderCodeWindow(actionState);
   });
-
+  
   if (actionStateList.length === 1) {
     $btn.click();
   }
 }
 
-function formatTime(date) {
-  let hours = date.getHours().toString().padStart(2, '0');
-  let minutes = date.getMinutes().toString().padStart(2, '0');
-  let seconds = date.getSeconds().toString().padStart(2, '0');
-
-  return `${hours}:${minutes}:${seconds}`;
-}
-
-function renderActionStateWithExpandableTemplate(actionState) {
-  const $actionList = $("#actionsList");
-  const $actionTemplate = $("#actionTemplate");
-
-  if (!$actionTemplate) {
-    console.warn("Template not found", actionState);
-    return;
-  }
-
-  const clone = $actionTemplate.content.cloneNode(true);
-  const $summary = clone.querySelector("summary");
-  const $code = clone.querySelector("code");
-
-  $summary.textContent = actionState.actionId;
-  $code.textContent = JSON.stringify(actionState.payload, null, 2);
-  try {
-    hljs.highlightElement($code);
-  } catch (error) {
-    console.warn(error);
-  }
-  $actionList.appendChild(clone);
-  updateEmptyMsg($actionList);
-
-  $summary.addEventListener("click", () => {
-    viewState.actionStateSelected = actionState;
-
-    const summaryList = $actionList.querySelectorAll("summary");
-    summaryList.forEach(($summaryItem) => {
-      $summaryItem.classList.remove("active");
-    });
-
-    $summary.classList.add("active");
-    renderCodeWindow(actionState);
+function setActiveButton($actionList, $btn) {
+  $actionList.querySelectorAll("button").forEach(($buttonItem) => {
+    $buttonItem.classList.toggle("active", $buttonItem === $btn);
   });
-
-  if (actionStateList.length === 1) {
-    $summary.click();
-  }
 }
 
 function renderCodeWindow(actionState) {
@@ -173,16 +131,18 @@ function renderCodeWindow(actionState) {
   } catch (error) {
     console.warn(error);
   }
+}
 
+function formatTime(date) {
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+  return `${hours}:${minutes}:${seconds}`;
 }
 
 function updateEmptyMsg($actionList) {
   const $emptyActionsMsg = $("#emptyActionsMsg");
-  if ($actionList.children.length === 0) {
-    $emptyActionsMsg.style.display = "block";
-  } else {
-    $emptyActionsMsg.style.display = "none";
-  }
+  $emptyActionsMsg.style.display = $actionList.children.length === 0 ? "block" : "none";
 }
 
 function clearPanel() {
