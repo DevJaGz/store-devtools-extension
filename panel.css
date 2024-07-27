@@ -161,7 +161,7 @@ body {
   margin-bottom: calc(var(--base-gap) / 2);
 }
 
-.tab-btn {
+.btn {
   height: fit-content;
   padding: 0.375rem 0.75rem;
   border-radius: 0.325rem;
@@ -172,13 +172,13 @@ body {
   border-color: transparent;
 }
 
-.tab-btn.active {
+.btn.active {
   background-color: var(--color-highlight);
   color: var(--color-surface);
   font-weight: bold;
 }
 
-.tab-btn:not(.active):hover {
+.btn:not(.active):hover {
   background-color: var(--color-card-block-hover);
 }
 
