@@ -62,6 +62,9 @@ function renderNewActionState(actionState) {
   $summary.addEventListener("click", () => {
     renderNewState(actionState.state);
   });
+  if (actionStateList.length === 1) {
+    $summary.click();
+  }
 }
 
 function renderNewState(state) {
