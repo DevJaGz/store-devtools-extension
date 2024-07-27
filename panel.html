@@ -18,12 +18,21 @@
           <ul id="actionsList"></ul>
         </section>
         <section class="section state">
-          <h3>State</h3>
+          <div class="tabs">
+            <button class="tab-btn active" data-tab="state">State</button>
+            <button class="tab-btn" data-tab="payload">Payload</button>
+            <button class="tab-btn" data-tab="diff">Diff</button>
+          </div>
           <pre class="language-json"><code id="state">No event data received</code></pre>
         </section>
       </main>
     </div>
     <script src="panel.js"></script>
+    <template id="actionTemplateBtn">
+      <button class="action-btn">
+        <span class="action-btn__text">Some details</span>
+      </button>
+    </template>
     <template id="actionTemplate">
       <li>
         <details class="action">

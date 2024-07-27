@@ -2,6 +2,9 @@ const $ = (query) => document.querySelector(query);
 const $state = $("#state");
 
 const actionStateList = [];
+const viewState = {
+  tab: 'state', // state, payload, diff
+}
 
 hljs.highlightAll();
 
