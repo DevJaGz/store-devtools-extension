@@ -73,6 +73,34 @@ function createActionState(item) {
 }
 
 function renderNewActionState(actionState) {
+  // renderActionStateWithExpandableTemplate(actionState);
+  renderActionStateWithFixedTemplate(actionState);
+}
+
+function renderActionStateWithFixedTemplate(actionState) {
+  const $actionList = $("#actionsList");
+  const $actionTemplate = $("#actionTemplateBtn");
+  if (!$actionTemplate) {
+    console.warn("Template not found", actionState);
+    return;
+  }
+  const clone = $actionTemplate.content.cloneNode(true);
+  const $btn = clone.querySelector("button");
+  $btn.querySelector("span:first-child").textContent = actionState.actionId;
+  $btn.querySelector("span:last-child").textContent = formatTime(new Date());
+  $actionList.appendChild(clone);
+  updateEmptyMsg($actionList);
+}
+
+function formatTime(date) {
+  let hours = date.getHours().toString().padStart(2, '0');
+  let minutes = date.getMinutes().toString().padStart(2, '0');
+  let seconds = date.getSeconds().toString().padStart(2, '0');
+
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+function renderActionStateWithExpandableTemplate(actionState) {
   const $actionList = $("#actionsList");
   const $actionTemplate = $("#actionTemplate");
 
@@ -109,16 +137,15 @@ function renderNewActionState(actionState) {
 }
 
 function renderCodeWindow(actionState) {
-  console.log('renderCodeWindow',actionState);
   const tab = viewState.tab;
   let rawCode = JSON.stringify(actionState.state, null, 2);
+
   if (tab === "payload") {
     rawCode = JSON.stringify(actionState.payload, null, 2);
   } else if (tab === "diff") {
     rawCode = '{ "diff": "TODO" }';
   }
 
-  console.log('rawCode',rawCode);
   try {
     const highlightedCode = hljs.highlight(rawCode, { language: "json" }).value;
     $codeWindow.innerHTML = highlightedCode;
