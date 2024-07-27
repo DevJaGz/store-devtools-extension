@@ -76,16 +76,22 @@ body {
 
 .action summary{
   cursor: pointer;
+  color: #2EE935;
 }
 
 .action[open] summary {
   padding: 0 0 var(--base-gap) 0;
 }
 
+.action strong {
+  color: #bcbcbc;
+}
+
 .action pre {
   max-height: 300px;
   overflow: auto;
   margin-top: var(--base-gap);
+  color: #2EE935;
 }
 
 @media screen and (width > 768px) {
