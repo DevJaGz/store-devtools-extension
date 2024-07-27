@@ -77,11 +77,7 @@ body {
   background: var(--color-card-block);
   box-shadow: var(--shadow-action);
   border-radius: 9999px;
-  transition: var(--transitions-color);
-}
-
-.action:hover{
-  background-color: var(--color-card-block-hover);
+  overflow: hidden;
 }
 
 .action[open] {
@@ -92,36 +88,40 @@ body {
   cursor: pointer;
   color: var(--color-highlight);
   padding: calc(var(--base-gap) / 2) var(--base-gap);
+  transition: var(--transitions-color);
+}
+
+.action summary:hover {
+  background-color: var(--color-card-block-hover);
 }
 
 .action strong {
   color: var(--color-text-opaque);
-  padding: var(--base-gap);
+  display: inline-block;
+  padding: calc(var(--base-gap) / 2) var(--base-gap);
 }
 
-.action pre {
+.action pre code {
   max-height: 300px;
   overflow: auto;
   background-color: var(--color-card-block);
   padding: var(--base-gap);
 }
-.action:hover pre {
-  background-color: var(--color-card-block-hover);
-}
 
-.action pre::-webkit-scrollbar {
+.action pre code::-webkit-scrollbar {
   width: 0.25rem;
   height: 0.25rem;
   background-color: var(--color-card);
 }
-.action pre::-webkit-scrollbar-thumb {
+.action pre code::-webkit-scrollbar-thumb {
   background-color: var(--color-highlight);
   border-radius: 9999px;
   transition: var(--transitions-color);
 }
-.action pre::-webkit-scrollbar-thumb:hover {
+.action pre code::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-highlight-hover);
 }
+
 
 @media screen and (width > 768px) {
   .panel__content {

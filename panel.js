@@ -41,10 +41,10 @@ function renderNewActionState(actionState){
   }
   const clone = $actionTemplate.content.cloneNode(true);
   const $summary = clone.querySelector('summary');
-  const $pre = clone.querySelector('pre');
+  const $code = clone.querySelector('code');
   $summary.textContent = actionState.actionId;
-  $pre.textContent = JSON.stringify(actionState.payload, null, 2);
-  hljs.highlightElement($pre);
+  $code.textContent = JSON.stringify(actionState.payload, null, 2);
+  hljs.highlightElement($code);
   $actionList.appendChild(clone);
   updateEmptyMsg($actionList);
 }
