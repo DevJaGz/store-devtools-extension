@@ -15,6 +15,7 @@ chrome.runtime.onInstalled.addListener(() => {
           state: data.state
         }
       };
+      console.log('[BACKGROUND] store-data', storageData);
       chrome.storage.local.set(storageData);
     }
   });
@@ -25,7 +26,7 @@ chrome.runtime.onInstalled.addListener(() => {
     title: 'Store DevTools',
     message: 'Ready to use!',
     buttons: [
-      { title: 'Ok.' }
+      { title: 'Ok' }
     ],
     priority: 0
   });
