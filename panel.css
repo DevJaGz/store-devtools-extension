@@ -2,6 +2,7 @@
   --base-gap: 1rem;
   --color-surface: #171717;
   --color-text: #fafafa;
+  --color-text-opaque: #bcbcbc;
   --color-card:#202020 ;
   --color-card-block: #242424;
   --color-card-block-hover: #303030;
@@ -61,7 +62,6 @@ body {
 
 .section h3 {
   font-size: 1.25rem;
-  text-align: center;
   margin-bottom: var(--base-gap);
 }
 
@@ -76,7 +76,6 @@ body {
 .action {
   background: var(--color-card-block);
   box-shadow: var(--shadow-action);
-  padding: 0.5rem var(--base-gap);
   border-radius: 9999px;
   transition: var(--transitions-color);
 }
@@ -91,22 +90,20 @@ body {
 
 .action summary{
   cursor: pointer;
-  color: #2EE935;
-}
-
-.action[open] summary {
-  padding: 0 0 var(--base-gap) 0;
+  color: var(--color-highlight);
+  padding: calc(var(--base-gap) / 2) var(--base-gap);
 }
 
 .action strong {
-  color: #bcbcbc;
+  color: var(--color-text-opaque);
+  padding: var(--base-gap);
 }
 
 .action pre {
   max-height: 300px;
   overflow: auto;
-  margin-top: var(--base-gap);
   background-color: var(--color-card-block);
+  padding: var(--base-gap);
 }
 .action:hover pre {
   background-color: var(--color-card-block-hover);
@@ -120,7 +117,7 @@ body {
 .action pre::-webkit-scrollbar-thumb {
   background-color: var(--color-highlight);
   border-radius: 9999px;
-  transition: all 0.2s ease-in-out;
+  transition: var(--transitions-color);
 }
 .action pre::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-highlight-hover);
