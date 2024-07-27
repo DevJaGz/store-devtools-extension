@@ -40,10 +40,10 @@ body {
   font-size: 0.875rem;
 }
 
-code {
+.panel code {
   max-height: 300px;
   overflow: auto;
-  background-color: var(--color-card-block);
+  background-color: var(--color-card-block) !important;
   padding: var(--base-gap);
 }
 
