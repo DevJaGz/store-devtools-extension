@@ -182,12 +182,11 @@ function updateEmptyMsg($actionList) {
 
 function clearPanel() {
   const $actionsList = $("#actionsList");
-  const $state = $("#state");
   const $emptyActionsMsg = $("#emptyActionsMsg");
   const emptyMsg = "No event data received";
   $emptyActionsMsg.style.display = "block";
   $actionsList.innerHTML = "";
   $emptyActionsMsg.textContent = emptyMsg;
-  $state.innerHTML = emptyMsg;
+  $codeWindow.innerHTML = emptyMsg;
   actionStateList.length = 0;
 }

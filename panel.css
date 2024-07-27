@@ -100,12 +100,16 @@ body {
 }
 
 .section.actions {
-  max-height: calc(100svh - 1rem);
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100svh - var(--base-gap));
 }
 
 #actionsList {
   list-style-type: none;
+  overflow-y: auto;
+  flex: 1;
+  padding: calc(var(--base-gap) / 2);
 }
 
 #actionsList li + li {
