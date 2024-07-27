@@ -19,7 +19,6 @@ chrome.runtime.onInstalled.addListener(() => {
       const storageData = {
         ['store-devtools']: actionStateList
       };
-      console.log("[BACKGROUND] store-data", storageData);
       chrome.storage.local.set(storageData);
     }
   });

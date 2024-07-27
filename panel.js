@@ -47,25 +47,31 @@ function createActionState(item) {
 function renderNewActionState(actionState) {
   const $actionList = $("#actionsList");
   const $actionTemplate = $("#actionTemplate");
+
   if (!$actionTemplate) {
     console.warn("Template not found", actionState);
     return;
   }
+
   const clone = $actionTemplate.content.cloneNode(true);
   const $summary = clone.querySelector("summary");
   const $code = clone.querySelector("code");
+
   $summary.textContent = actionState.actionId;
   $code.textContent = JSON.stringify(actionState.payload, null, 2);
   hljs.highlightElement($code);
   $actionList.appendChild(clone);
   updateEmptyMsg($actionList);
+
   $summary.addEventListener("click", () => {
-    $actionList.querySelectorAll("summary").forEach(($action) => {
-      $action.classList.remove("active");
+    const summaryList = $actionList.querySelectorAll("summary");
+    summaryList.forEach(($summaryItem) => {
+      $summaryItem.classList.remove("active");
     });
     $summary.classList.add("active");
     renderNewState(actionState.state);
   });
+
   if (actionStateList.length === 1) {
     $summary.click();
   }
