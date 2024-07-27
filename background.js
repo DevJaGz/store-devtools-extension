@@ -1,10 +1,12 @@
 const actionStateList = [];
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({
-    id: "openDevTools",
-    title: "Open Store",
-    contexts: ["all"],
+  chrome.webNavigation.onCommitted.addListener((details) => {
+    if (details.frameId === 0 && details.transitionType === "reload") {
+      console.log("clearing storage");
+      chrome.storage.local.clear();
+      actionStateList.length = 0;
+    }
   });
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -17,8 +19,9 @@ chrome.runtime.onInstalled.addListener(() => {
       };
       actionStateList.push(actionState);
       const storageData = {
-        ['store-devtools']: actionStateList
+        ["store-devtools"]: actionStateList,
       };
+      console.log("Saving storage");
       chrome.storage.local.set(storageData);
     }
   });
@@ -31,6 +34,12 @@ chrome.runtime.onInstalled.addListener(() => {
     buttons: [{ title: "Ok" }],
     priority: 0,
   });
+});
+
+chrome.contextMenus.create({
+  id: "openDevTools",
+  title: "Open Store",
+  contexts: ["all"],
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {

@@ -8,6 +8,11 @@ hljs.highlightAll();
 chrome.storage.local.get(null, (items) => {
   console.log(items);
   const rawActionStateList = items["store-devtools"];
+  if (!rawActionStateList?.length) {
+    console.log("clearPanel From initial load", rawActionStateList);
+    clearPanel();
+    return;
+  }
   handleActionsStateRender(rawActionStateList);
 });
 
@@ -15,6 +20,11 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   if (areaName === "local") {
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
       if (key === "store-devtools") {
+        if (!newValue?.length) {
+          console.log("clearPanel Update", newValue);
+          clearPanel();
+          return;
+        }
         handleActionsStateRender(newValue);
         continue;
       }
@@ -71,7 +81,7 @@ function renderNewActionState(actionState) {
     $summary.classList.add("active");
     renderNewState(actionState.state);
   });
-
+  console.log("renderNewActionState", actionStateList);
   if (actionStateList.length === 1) {
     $summary.click();
   }
@@ -90,4 +100,16 @@ function updateEmptyMsg($actionList) {
   } else {
     $emptyActionsMsg.style.display = "none";
   }
+}
+
+function clearPanel() {
+  const $actionsList = $("#actionsList");
+  const $state = $("#state");
+  const $emptyActionsMsg = $("#emptyActionsMsg");
+  const emptyMsg = "No event data received";
+  $emptyActionsMsg.style.display = "block";
+  $actionsList.innerHTML = "";
+  $emptyActionsMsg.textContent = emptyMsg;
+  $state.innerHTML = emptyMsg;
+  actionStateList.length = 0;
 }
