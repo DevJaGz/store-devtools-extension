@@ -4,6 +4,31 @@ chrome.runtime.onInstalled.addListener(() => {
     title: "Open Store",
     contexts: ["all"],
   });
+
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === 'store-data') {
+      const { data } = message;
+      const storageData = {
+        ['store-devtools']: {
+          actionId: data.actionId,
+          payload: data.payload,
+          state: data.state
+        }
+      };
+      chrome.storage.local.set(storageData);
+    }
+  });
+
+  chrome.notifications.create({
+    type: 'basic',
+    iconUrl: 'public/icon48.png',
+    title: 'Store DevTools',
+    message: 'Ready to use!',
+    buttons: [
+      { title: 'Ok.' }
+    ],
+    priority: 0
+  });
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
@@ -27,16 +52,6 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
 
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === 'store-data') {
-    const { data } = message;
-    const storageData = {
-      ['store-devtools']: {
-        actionId: data.actionId,
-        payload: data.payload,
-        state: data.state
-      }
-    };
-    chrome.storage.local.set(storageData);
-  }
-});
+
+
+

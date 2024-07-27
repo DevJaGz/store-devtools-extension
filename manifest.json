@@ -5,7 +5,7 @@
   "version": "1.0",
   "description": "A Chrome DevTools extension for http://localhost:4200",
   "host_permissions": ["http://localhost/*", "http://127.0.0.1/*"],
-  "permissions": ["contextMenus", "tabs", "activeTab", "storage"],
+  "permissions": ["contextMenus", "tabs", "activeTab", "storage", "notifications"],
   "devtools_page": "devtools.html",
   "background": {
     "service_worker": "background.js"
