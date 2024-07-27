@@ -8,6 +8,8 @@
   --color-card-block-hover: #303030;
   --color-highlight: #2ee935;
   --color-highlight-hover: #0daa12;
+  --color-scroll-thumb: #303030;
+  --color-scroll-thumb-hover: #454545;
   --shadow-section: 0 0 4px #000000;
   --shadow-action: 0 0 2px #000000;
   --transitions-color: background-color 0.2s ease-in-out,
@@ -23,17 +25,17 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--color-highlight);
+  background-color: var(--color-scroll-thumb);
   border-radius: 9999px;
   transition: var(--transitions-color);
 }
 *::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-highlight-hover);
+  background-color: var(--color-scroll-thumb-hover);
 }
 *::-webkit-scrollbar {
   width: 0.375rem;
   height: 0.375rem;
-  background-color: var(--color-card);
+  background-color: var(--color-surface);
 }
 
 body {
