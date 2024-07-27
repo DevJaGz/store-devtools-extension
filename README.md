@@ -48,6 +48,11 @@ Chrome Extension to inspect the Custom Store Actions through a panel that can be
       // Handle the error
     }
 ```
+> [!NOTE]  
+> Wehre `actionId` is the action identification, `payload` is the data passed to the execute the action  and `state` is the mutatated state of the store.
+
+> [!IMPORTANT]  
+> The extension is only available for `http://localhost/*` domains, however, you can change the [manifest.json](./manifest.json) file to allow access to other domains.
 
 ## <a name="installation"></a> 🔄 Installation
 

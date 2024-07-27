@@ -3,7 +3,7 @@
   "name": "Store DevTools",
   "author": "Julian Gomez",
   "version": "1.0",
-  "description": "A Chrome DevTools extension for http://localhost:4200",
+  "description": "A Chrome DevTools extension for http://localhost/*",
   "host_permissions": ["http://localhost/*", "http://127.0.0.1/*"],
   "permissions": ["webNavigation", "contextMenus", "tabs", "activeTab", "storage", "notifications"],
   "devtools_page": "devtools.html",
