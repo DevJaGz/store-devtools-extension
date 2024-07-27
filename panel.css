@@ -191,6 +191,10 @@ body {
   background-color: var(--color-card-block-hover);
 }
 
+.tabs .btn {
+  border: 1px solid var(--color-surface);
+}
+
 .btn.action {
   width: 100%;
   border-radius: 9999px;
