@@ -12,6 +12,7 @@
   --color-scroll-thumb-hover: #323232;
   --shadow-section: 0 0 4px #000000;
   --shadow-action: 0 0 2px #000000;
+  --shadow-action-highlight: 0 0 2px var(--color-highlight);
   --transitions-color: background-color 0.2s ease-in-out,
     border-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
@@ -194,6 +195,7 @@ body {
   justify-content: space-between;
   padding: calc(var(--base-gap) / 2) var(--base-gap);
   gap: 0.25rem;
+  font-family: inherit;
 }
 
 .btn.action + .btn.action {
@@ -205,12 +207,17 @@ body {
   overflow: hidden;
   max-width: 100%;
   text-overflow: ellipsis;
-  font-family: inherit;
 }
 
 .btn.action span:last-child {
-  font-size: 0.675rem;
+  font-size: 0.75rem;
   color: var(--color-text-opaque);
+}
+
+.btn.action.active {
+  box-shadow: var(--shadow-action-highlight);
+  color: var(--color-highlight);
+  background-color: var(--color-surface);
 }
 
 @media screen and (width > 768px) {

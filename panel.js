@@ -90,6 +90,22 @@ function renderActionStateWithFixedTemplate(actionState) {
   $btn.querySelector("span:last-child").textContent = formatTime(new Date());
   $actionList.appendChild(clone);
   updateEmptyMsg($actionList);
+
+  $btn.addEventListener("click", () => {
+    viewState.actionStateSelected = actionState;
+
+    const buttonList = $actionList.querySelectorAll("button");
+    buttonList.forEach(($buttonItem) => {
+      $buttonItem.classList.remove("active");
+    });
+
+    $btn.classList.add("active");
+    renderCodeWindow(actionState);
+  });
+
+  if (actionStateList.length === 1) {
+    $btn.click();
+  }
 }
 
 function formatTime(date) {
