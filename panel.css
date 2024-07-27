@@ -92,6 +92,15 @@ body {
   overflow: auto;
   margin-top: var(--base-gap);
 }
+.action pre::-webkit-scrollbar {
+  width: 0.25rem;
+  height: 0.25rem;
+  background-color: #202020;
+}
+.action pre::-webkit-scrollbar-thumb {
+  background-color: #2EE935;
+  border-radius: 9999px;
+}
 
 @media screen and (width > 768px) {
   .panel__content {
