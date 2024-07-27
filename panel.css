@@ -1,5 +1,15 @@
 :root{
   --base-gap: 1rem;
+  --color-surface: #171717;
+  --color-text: #fafafa;
+  --color-card:#202020 ;
+  --color-card-block: #242424;
+  --color-card-block-hover: #303030;
+  --color-highlight: #2EE935;
+  --color-highlight-hover: #0daa12;
+  --shadow-section: 0 0 4px #000000;
+  --shadow-action: 0 0 2px #000000;
+  --transitions-color: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 *, *::before, *::after {
@@ -10,8 +20,8 @@
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #171717;
-  color:#fafafa;
+  background-color: var(--color-surface);
+  color:var(--color-text);
   font-size: 0.875rem;
 }
 
@@ -43,9 +53,10 @@ body {
 
 .section {
   padding: var(--base-gap);
-  background-color: #202020;
+  background-color: var(--color-card);
   height: 100%;
   border-radius: 0.325rem;
+  box-shadow: var(--shadow-section);
 }
 
 .section h3 {
@@ -53,8 +64,6 @@ body {
   text-align: center;
   margin-bottom: var(--base-gap);
 }
-
-
 
 #actionsList {
   list-style-type: none;
@@ -65,9 +74,15 @@ body {
 }
 
 .action {
-  background: #303030;
+  background: var(--color-card-block);
+  box-shadow: var(--shadow-action);
   padding: 0.5rem var(--base-gap);
   border-radius: 9999px;
+  transition: var(--transitions-color);
+}
+
+.action:hover{
+  background-color: var(--color-card-block-hover);
 }
 
 .action[open] {
@@ -91,17 +106,24 @@ body {
   max-height: 300px;
   overflow: auto;
   margin-top: var(--base-gap);
-  background-color: #303030;
+  background-color: var(--color-card-block);
+}
+.action:hover pre {
+  background-color: var(--color-card-block-hover);
 }
 
 .action pre::-webkit-scrollbar {
   width: 0.25rem;
   height: 0.25rem;
-  background-color: #202020;
+  background-color: var(--color-card);
 }
 .action pre::-webkit-scrollbar-thumb {
-  background-color: #2EE935;
+  background-color: var(--color-highlight);
   border-radius: 9999px;
+  transition: all 0.2s ease-in-out;
+}
+.action pre::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-highlight-hover);
 }
 
 @media screen and (width > 768px) {
