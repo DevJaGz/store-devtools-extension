@@ -61,7 +61,6 @@ function renderNewActionState(actionState) {
   updateEmptyMsg($actionList);
   $summary.addEventListener("click", () => {
     $actionList.querySelectorAll("summary").forEach(($action) => {
-      console.log("removing", $action);
       $action.classList.remove("active");
     });
     $summary.classList.add("active");
