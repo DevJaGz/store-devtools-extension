@@ -32,7 +32,7 @@ body {
   min-height: 100svh;
   max-width: 1440px;
   margin: 0 auto;
-  padding: var(--base-gap);
+  padding: calc(var(--base-gap) / 2);
 }
 
 .panel__header{
@@ -48,7 +48,7 @@ body {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--base-gap);
+  gap: calc(var(--base-gap) / 2);
 }
 
 .section {
@@ -124,6 +124,6 @@ body {
 
 @media screen and (width > 768px) {
   .panel__content {
-    grid-template-columns: calc(50% - calc(var(--base-gap) / 2)) calc(50% - calc(var(--base-gap) / 2));
+    grid-template-columns: calc(50% - calc(var(--base-gap) / 4)) calc(50% - calc(var(--base-gap) / 4));
   }
 }
