@@ -1,19 +1,22 @@
-:root{
+:root {
   --base-gap: 1rem;
   --color-surface: #171717;
   --color-text: #fafafa;
   --color-text-opaque: #bcbcbc;
-  --color-card:#202020 ;
+  --color-card: #202020;
   --color-card-block: #242424;
   --color-card-block-hover: #303030;
-  --color-highlight: #2EE935;
+  --color-highlight: #2ee935;
   --color-highlight-hover: #0daa12;
   --shadow-section: 0 0 4px #000000;
   --shadow-action: 0 0 2px #000000;
-  --transitions-color: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  --transitions-color: background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -34,9 +37,10 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: var(--color-surface);
-  color:var(--color-text);
+  color: var(--color-text);
   font-size: 0.875rem;
 }
 
@@ -56,16 +60,16 @@ body {
   padding: calc(var(--base-gap) / 2);
 }
 
-.panel__header{
+.panel__header {
   width: 100%;
 }
 
-.panel__header h1{
+.panel__header h1 {
   font-size: 1.5rem;
   text-align: center;
 }
 
-.panel__content{ 
+.panel__content {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr;
@@ -85,6 +89,11 @@ body {
   margin-bottom: var(--base-gap);
 }
 
+.section.actions {
+  max-height: calc(100svh - 1rem);
+  overflow-y: auto;
+}
+
 #actionsList {
   list-style-type: none;
 }
@@ -100,7 +109,7 @@ body {
   overflow: hidden;
 }
 
-.action:has(summary.active){
+.action:has(summary.active) {
   border: 1px solid var(--color-highlight);
 }
 
@@ -108,7 +117,7 @@ body {
   border-radius: 0.325rem;
 }
 
-.action summary{
+.action summary {
   cursor: pointer;
   color: var(--color-highlight);
   padding: calc(var(--base-gap) / 2) var(--base-gap);
@@ -132,6 +141,8 @@ code#state {
 
 @media screen and (width > 768px) {
   .panel__content {
-    grid-template-columns: calc(50% - calc(var(--base-gap) / 4)) calc(50% - calc(var(--base-gap) / 4));
+    grid-template-columns: calc(50% - calc(var(--base-gap) / 4)) calc(
+        50% - calc(var(--base-gap) / 4)
+      );
   }
 }
