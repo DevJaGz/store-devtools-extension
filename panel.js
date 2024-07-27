@@ -7,6 +7,7 @@ const viewState = {
   actionStateSelected: null,
 };
 
+
 hljs.highlightAll();
 
 $tapBtns.forEach(($tapBtn) => {
@@ -131,7 +132,11 @@ function renderActionStateWithExpandableTemplate(actionState) {
 
   $summary.textContent = actionState.actionId;
   $code.textContent = JSON.stringify(actionState.payload, null, 2);
-  hljs.highlightElement($code);
+  try {
+    hljs.highlightElement($code);
+  } catch (error) {
+    console.warn(error);
+  }
   $actionList.appendChild(clone);
   updateEmptyMsg($actionList);
 
