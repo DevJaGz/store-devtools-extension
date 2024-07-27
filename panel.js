@@ -1,4 +1,5 @@
 const $ = (query) => document.querySelector(query);
+const $state = $('#state');
 const actionStateList = [];
 
 hljs.highlightAll();
@@ -23,14 +24,15 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 });
 
 
+
+
+
 function createActionState(item){
   return {
     id: crypto.randomUUID(),
     ...item
   }
 }
-
-
 
 function renderNewActionState(actionState){
   const $actionList = $('#actionsList');
@@ -45,6 +47,10 @@ function renderNewActionState(actionState){
   $summary.textContent = actionState.actionId;
   $code.textContent = JSON.stringify(actionState.payload, null, 2);
   hljs.highlightElement($code);
+  $summary.addEventListener('click', () => {
+    $state.textContent = JSON.stringify(actionState.state, null, 2);
+    hljs.highlightElement($state);
+  });
   $actionList.appendChild(clone);
   updateEmptyMsg($actionList);
 }
