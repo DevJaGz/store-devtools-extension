@@ -1,6 +1,8 @@
 const $ = (query) => document.querySelector(query);
 const actionStateList = [];
 
+hljs.highlightAll();
+
 chrome.storage.local.get(null, (items) => {
   const actionState = createActionState(items['store-devtools']);
   actionStateList.push(actionState);
@@ -42,6 +44,7 @@ function renderNewActionState(actionState){
   const $pre = clone.querySelector('pre');
   $summary.textContent = actionState.actionId;
   $pre.textContent = JSON.stringify(actionState.payload, null, 2);
+  hljs.highlightElement($pre);
   $actionList.appendChild(clone);
   updateEmptyMsg($actionList);
 }

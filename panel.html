@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Store Panel</title>
-  <link rel="stylesheet" href="panel.css">
-</head>
-<body>
-  <div class="panel">
-    <header class="panel__header">
-      <h1>Store</h1>
-    </header>
-    <main class="panel__content">
-      <section class="section actions">
-        <h3>Actions</h3>
-        <span id="emptyActionsMsg">No event data received</span>
-        <ul id="actionsList"></ul>
-      </section>
-      <section class="section state">
-        <h3>State</h3>
-        <pre id="state">No event data received</pre>
-      </section>
-    </main>
-  </div>
-  <script src="panel.js"></script>
-  <template id="actionTemplate">
-    <li>
-      <details class="action">
-        <summary>Some details</summary>
-        <strong>Payload:</strong>
-        <pre><code>{}</code></pre>
-      </details>
-    </li>
-  </template>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Panel</title>
+    <link rel="stylesheet" href="panel.css" />
+    <link rel="stylesheet" href="public/highlight.css">
+    <link rel="stylesheet" href="public/dark-highlight.css">
+    <script src="public/highligh.js"></script>
+  </head>
+  <body>
+    <div class="panel">
+      <header class="panel__header">
+        <h1>Store</h1>
+      </header>
+      <main class="panel__content">
+        <section class="section actions">
+          <h3>Actions</h3>
+          <span id="emptyActionsMsg">No event data received</span>
+          <ul id="actionsList"></ul>
+        </section>
+        <section class="section state">
+          <h3>State</h3>
+          <pre id="state">No event data received</pre>
+        </section>
+      </main>
+    </div>
+    <script src="panel.js"></script>
+    <template id="actionTemplate">
+      <li>
+        <details class="action">
+          <summary>Some details</summary>
+          <strong>Payload:</strong>
+          <pre class="language-json"><code>{}</code></pre>
+        </details>
+      </li>
+    </template>
+  </body>
 </html>
-
